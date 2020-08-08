@@ -1,15 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Index: React.FC = () => {
-  return (
-    <div>
-      Index
-    </div>
-  )
-}
+import Login from '@/presentation/pages/login/Login'
 
 ReactDOM.render(
-  <Index />,
+  <Login />,
   document.getElementById('root')
 )
