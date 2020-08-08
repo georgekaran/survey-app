@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Login from '@/presentation/pages/login/Login'
+import Router from '@/presentation/components/router/Router'
 
 ReactDOM.render(
-  <Login />,
+  <Router />,
   document.getElementById('root')
 )
