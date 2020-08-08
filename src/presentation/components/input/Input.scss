@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 .inputWrap {
   margin-top: 24px;
   display: flex;
@@ -9,6 +11,10 @@
   }
 
   .status {
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    background: $red;
     position: absolute;
     right: 8px;
     font-size: 12px;
