@@ -30,6 +30,10 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     })
   }, [state.email, state.password])
 
+  const isInvalidState = (): boolean => {
+    return !!state.emailError || !!state.passwordError
+  }
+
   return (
     <div className={Styles.login}>
       <LoginHeader />
@@ -38,7 +42,7 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu email" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
-          <button data-testid="submit" disabled className={Styles.submit} type="submit">
+          <button data-testid="submit" disabled={isInvalidState()} className={Styles.submit} type="submit">
             Entrar
           </button>
           <span className={Styles.link}>
