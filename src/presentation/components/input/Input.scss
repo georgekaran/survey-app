@@ -20,4 +20,12 @@
     font-size: 12px;
     cursor: help;
   }
+
+  .statusError {
+    background: $red;
+  }
+
+  .statusSuccess {
+    background: $green;
+  }
 }

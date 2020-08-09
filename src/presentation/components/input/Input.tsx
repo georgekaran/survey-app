@@ -20,13 +20,13 @@ const Input: React.FC<Props> = (props: Props) => {
   }
 
   const getTitle = (): string => {
-    return error
+    return error || 'Ok!'
   }
 
   return (
     <div className={Styles.inputWrap}>
       <input {...props} data-testid={props.name} readOnly onFocus={enableInput} onChange={handleChange} />
-      <span data-testid={`${props.name}-status`} title={getTitle()} className={Styles.status}></span>
+      <span data-testid={`${props.name}-status`} title={getTitle()} className={`${Styles.status} ${error ? Styles.statusError : Styles.statusSuccess}`}></span>
     </div>
   )
 }
