@@ -1,5 +1,6 @@
 import Styles from './Login.scss'
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import LoginHeader from '@/presentation/components/login-header/LoginHeader'
 import Footer from '@/presentation/components/footer/Footer'
@@ -71,9 +72,9 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
           <button data-testid="submit" disabled={isInvalidState()} className={Styles.submit} type="submit">
             Entrar
           </button>
-          <span className={Styles.link}>
+          <Link data-testid="signup" to="/signup" className={Styles.link}>
             Criar conta
-          </span>
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>
