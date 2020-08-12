@@ -177,6 +177,15 @@ describe('Login Page', () => {
     expect(history.location.pathname).toBe('/')
   })
 
+  test('Should show error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
+    await simulateValidSubmit(sut)
+    testElementText(sut, 'main-error', error.message)
+    testErrorWrapChildCount(sut, 1)
+  })
+
   test('Should redirect to signup page on signup click', () => {
     const { sut } = makeSut()
     const signup = sut.getByTestId('signup')
