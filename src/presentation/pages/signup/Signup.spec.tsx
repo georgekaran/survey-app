@@ -141,4 +141,11 @@ describe('Signup Page', () => {
     await simulateValidSubmit(sut)
     expect(addAccountSpy.callsCount).toBe(1)
   })
+
+  test('Should not call AddAccount if form is invalid', () => {
+    const { sut, addAccountSpy } = makeSut({ validationError: faker.random.words() })
+    Helper.populateField(sut, 'email')
+    fireEvent.submit(sut.getByTestId('form'))
+    expect(addAccountSpy.callsCount).toBe(0)
+  })
 })
