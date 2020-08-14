@@ -1,5 +1,5 @@
 import Styles from './Signup.scss'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 
 import LoginHeader from '@/presentation/components/login-header/LoginHeader'
@@ -85,9 +85,9 @@ const Signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
           <button data-testid="submit" disabled={isInvalidState()} className={Styles.submit} type="submit">
             Create account
           </button>
-          <span className={Styles.link}>
-            Go to login
-          </span>
+          <Link to="/login" replace data-testid="login" className={Styles.link}>
+            Back to login
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>
