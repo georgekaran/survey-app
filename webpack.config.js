@@ -48,7 +48,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new DefinePlugin({
       'process.env': {
-        API_URL: JSON.stringify('http://localhost:5050/api')
+        API_URL: JSON.stringify('https://george-survey.herokuapp.com/api')
       }
     })
   ]
