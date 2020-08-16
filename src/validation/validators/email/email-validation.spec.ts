@@ -8,19 +8,21 @@ describe('EmailValidation', () => {
   test('should return error if email is invalid', () => {
     const fieldName = faker.random.word()
     const sut = makeSut(fieldName)
-    const error = sut.validate(faker.random.word())
+    const error = sut.validate({ [fieldName]: faker.random.word() })
     expect(error).toEqual(new InvalidFieldError(fieldName))
   })
 
   test('should return falsy if email is valid', () => {
-    const sut = makeSut(faker.random.word())
-    const error = sut.validate(faker.internet.email())
+    const fieldName = faker.random.word()
+    const sut = makeSut(fieldName)
+    const error = sut.validate({ [fieldName]: faker.internet.email() })
     expect(error).toBeFalsy()
   })
 
   test('should return falsy if email is empty', () => {
-    const sut = makeSut(faker.random.word())
-    const error = sut.validate('')
+    const fieldName = faker.random.word()
+    const sut = makeSut(fieldName)
+    const error = sut.validate({ [fieldName]: '' })
     expect(error).toBeFalsy()
   })
 })
