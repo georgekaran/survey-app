@@ -4,5 +4,5 @@ import { AddAccount } from '@/domain/usecases'
 import { makeApiUrl } from '@/main/factories/http/api-url-factory'
 
 export const makeRemoteAddAccount = (): AddAccount => {
-  return new RemoteAddAccount(makeApiUrl('/singup'), makeAxiosHttpClient())
+  return new RemoteAddAccount(makeApiUrl('/signup'), makeAxiosHttpClient())
 }
