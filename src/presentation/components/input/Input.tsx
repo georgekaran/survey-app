@@ -35,6 +35,7 @@ const Input: React.FC<Props> = (props: Props) => {
         onChange={handleChange}
       />
       <label
+        data-testid={`${props.name}-label`}
         onClick={() => { inputRef.current.focus() }}
       >
         {props.placeholder}
