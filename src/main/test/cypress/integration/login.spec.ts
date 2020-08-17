@@ -109,6 +109,20 @@ describe('Login', () => {
     cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')))
   })
 
+  it('Should submit form if enter key is pressed', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request')
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(20)).type('{enter}')
+    cy.get('@request.all').should('have.length', 1)
+  })
+
   it('Should prevent multiple submits', () => {
     cy.route({
       method: 'POST',
