@@ -27,4 +27,13 @@ describe('Input component', () => {
     fireEvent.focus(input)
     expect(input.readOnly).toBe(false)
   })
+
+  test('Should add focus to input on label click', () => {
+    const fieldName = faker.random.word()
+    const { getByTestId } = makeSut(fieldName)
+    const label = getByTestId(`${fieldName}-label`) as HTMLLabelElement
+    fireEvent.click(label)
+    const input = getByTestId(fieldName) as HTMLInputElement
+    expect(input === document.activeElement).toBe(true)
+  })
 })
