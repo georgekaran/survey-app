@@ -99,4 +99,14 @@ describe('Signup', () => {
     FormHelper.testUrl('/')
     FormHelper.testLocalStorageItem('accessToken')
   })
+
+  it('Should submit form if enter key is pressed', () => {
+    SignupMocks.mockOk()
+    cy.getByTestId('name').focus().type(faker.name.findName())
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    const password = faker.random.alphaNumeric(20)
+    cy.getByTestId('password').focus().type(password)
+    cy.getByTestId('passwordConfirmation').focus().type(password).type('{enter}')
+    FormHelper.testHttpCallsCount(1)
+  })
 })
