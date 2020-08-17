@@ -11,6 +11,17 @@ export const mockInvalidCredentialsError = (url: RegExp): void => {
   }).as('request')
 }
 
+export const mockEmailInUseError = (url: RegExp): void => {
+  cy.route({
+    method: 'POST',
+    url,
+    status: 403,
+    response: {
+      error: faker.random.words()
+    }
+  }).as('request')
+}
+
 export const mockUnexpectedError = (url: RegExp, method: string): void => {
   cy.route({
     method,
