@@ -3,12 +3,16 @@ import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 import * as SignupMocks from '../support/signup-mocks'
 
-const simulateValidSubmit = (): void => {
+const populateFields = (): void => {
   cy.getByTestId('name').focus().type(`${faker.name.firstName()} ${faker.name.lastName()}`)
   cy.getByTestId('email').focus().type(faker.internet.email())
   const password = faker.random.alphaNumeric(20)
   cy.getByTestId('password').focus().type(password)
   cy.getByTestId('passwordConfirmation').focus().type(password)
+}
+
+const simulateValidSubmit = (): void => {
+  populateFields()
   cy.getByTestId('submit').click()
 }
 
@@ -107,6 +111,13 @@ describe('Signup', () => {
     const password = faker.random.alphaNumeric(20)
     cy.getByTestId('password').focus().type(password)
     cy.getByTestId('passwordConfirmation').focus().type(password).type('{enter}')
+    FormHelper.testHttpCallsCount(1)
+  })
+
+  it('Should prevent multiple submits', () => {
+    SignupMocks.mockOk()
+    populateFields()
+    cy.getByTestId('submit').dblclick()
     FormHelper.testHttpCallsCount(1)
   })
 })
