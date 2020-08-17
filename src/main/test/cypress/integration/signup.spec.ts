@@ -90,4 +90,13 @@ describe('Signup', () => {
     cy.getByTestId('main-error').should('contain.text', 'Something went wrong. Try again later.')
     FormHelper.testUrl('/signup')
   })
+
+  it('Should save accessToken if valid data is returned', () => {
+    SignupMocks.mockOk()
+    simulateValidSubmit()
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error').should('not.exist')
+    FormHelper.testUrl('/')
+    FormHelper.testLocalStorageItem('accessToken')
+  })
 })
