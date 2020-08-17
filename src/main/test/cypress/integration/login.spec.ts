@@ -55,6 +55,24 @@ describe('Login', () => {
     cy.url().should('eq', `${baseUrl}/login`)
   })
 
+  it('Should present UnexpectedError on 400', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 400,
+      response: {
+        error: faker.random.words()
+      }
+    })
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(20))
+    cy.getByTestId('submit').click()
+    cy.getByTestId('error-wrap')
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error').should('contain.text', 'Something went wrong. Try again later.')
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
+
   it('Should present save accessToken if valid credentials are provided', () => {
     cy.route({
       method: 'POST',
