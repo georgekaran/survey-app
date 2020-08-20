@@ -5,7 +5,7 @@ import Logo from '@/presentation/components/logo/Logo'
 
 const LoginHeader: React.FC = () => {
   return (
-    <header className={Styles.header}>
+    <header className={Styles.headerWrap}>
       <Logo />
       <h1>Survey App</h1>
     </header>
