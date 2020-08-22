@@ -95,13 +95,13 @@ describe('Signup', () => {
     FormHelper.testUrl('/signup')
   })
 
-  it('Should save accessToken if valid data is returned', () => {
+  it('Should save currentAccount if valid data is returned', () => {
     SignupMocks.mockOk()
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testLocalStorageItem('account')
   })
 
   it('Should submit form if enter key is pressed', () => {

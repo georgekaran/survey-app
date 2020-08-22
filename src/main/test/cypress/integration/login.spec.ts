@@ -75,13 +75,13 @@ describe('Login', () => {
     FormHelper.testUrl('/login')
   })
 
-  it('Should present save accessToken if valid credentials are provided', () => {
+  it('Should present save updateCurrentAccount if valid credentials are provided', () => {
     LoginMocks.mockOk()
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testLocalStorageItem('account')
   })
 
   it('Should submit form if enter key is pressed', () => {
