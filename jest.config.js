@@ -13,6 +13,7 @@ module.exports = {
     '<rootDir>/src/main/test/cypress'
   ],
   coverageDirectory: 'coverage',
+  setupFilesAfterEnv: ['<rootDir>/src/main/config/jest-setup.ts'],
   testEnvironment: 'jsdom',
   transform: {
     '.+\\.(ts|tsx)$': 'ts-jest'
