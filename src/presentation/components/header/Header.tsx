@@ -6,7 +6,7 @@ import { ApiContext } from '@/presentation/contexts'
 import { useHistory } from 'react-router-dom'
 
 const Header: React.FC = () => {
-  const { setCurrentAccount } = useContext(ApiContext)
+  const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext)
   const history = useHistory()
 
   const handleLogout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       <div className={Styles.headerContent}>
         <Logo />
         <div className={Styles.logoutWrap}>
-          <span>George</span>
+          <span data-testid="username">{getCurrentAccount().name}</span>
           <a
             data-testid="logout"
             href="#"
