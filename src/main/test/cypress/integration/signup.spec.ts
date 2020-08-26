@@ -1,6 +1,7 @@
 import faker from 'faker'
 
-import * as FormHelper from '../support/form-helper'
+import * as FormHelper from '../support/form-helpers'
+import * as Helpers from '../support/helpers'
 import * as SignupMocks from '../support/signup-mocks'
 
 const populateFields = (): void => {
@@ -74,7 +75,7 @@ describe('Signup', () => {
     SignupMocks.mockEmailInUseError()
     simulateValidSubmit()
     cy.getByTestId('main-error').should('contain.text', 'Email is already in use')
-    FormHelper.testUrl('/signup')
+    Helpers.testUrl('/signup')
   })
 
   it('Should present UnexpectedError on 400', () => {
@@ -83,16 +84,7 @@ describe('Signup', () => {
     cy.getByTestId('error-wrap')
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('contain.text', 'Something went wrong. Try again later.')
-    FormHelper.testUrl('/signup')
-  })
-
-  it('Should present UnexpectedError if invalid data is returned', () => {
-    SignupMocks.mockOkInvalidData()
-    simulateValidSubmit()
-    cy.getByTestId('error-wrap')
-    cy.getByTestId('spinner').should('not.exist')
-    cy.getByTestId('main-error').should('contain.text', 'Something went wrong. Try again later.')
-    FormHelper.testUrl('/signup')
+    Helpers.testUrl('/signup')
   })
 
   it('Should save currentAccount if valid data is returned', () => {
@@ -100,8 +92,8 @@ describe('Signup', () => {
     simulateValidSubmit()
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('not.exist')
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('account')
+    Helpers.testUrl('/')
+    Helpers.testLocalStorageItem('account')
   })
 
   it('Should submit form if enter key is pressed', () => {
@@ -111,19 +103,19 @@ describe('Signup', () => {
     const password = faker.random.alphaNumeric(20)
     cy.getByTestId('password').focus().type(password)
     cy.getByTestId('passwordConfirmation').focus().type(password).type('{enter}')
-    FormHelper.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('Should prevent multiple submits', () => {
     SignupMocks.mockOk()
     populateFields()
     cy.getByTestId('submit').dblclick()
-    FormHelper.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('Should not call submit if form is invalid', () => {
     SignupMocks.mockOk()
     cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
-    FormHelper.testHttpCallsCount(0)
+    Helpers.testHttpCallsCount(0)
   })
 })
