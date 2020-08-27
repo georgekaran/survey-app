@@ -22,4 +22,10 @@ describe('SurveyList', () => {
     SurveyListHelper.mockAccessDeniedError()
     Helpers.testUrl('/login')
   })
+
+  it('Should present correct username', () => {
+    SurveyListHelper.mockUnexpectedError()
+    const account = Helpers.getLocalStorageItem('account')
+    cy.getByTestId('username').should('contain.text', account.name)
+  })
 })
