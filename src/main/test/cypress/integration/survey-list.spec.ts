@@ -17,4 +17,9 @@ describe('SurveyList', () => {
     SurveyListHelper.mockUnexpectedError()
     cy.getByTestId('error').should('contain.text', 'Something went wrong. Try again later.')
   })
+
+  it('Should logout on AccessDeniedError', () => {
+    SurveyListHelper.mockAccessDeniedError()
+    Helpers.testUrl('/login')
+  })
 })
