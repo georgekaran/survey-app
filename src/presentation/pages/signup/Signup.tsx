@@ -32,16 +32,32 @@ const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
   })
 
   useEffect(() => {
-    const { email, password, name, passwordConfirmation } = state
-    const formData = { email, password, name, passwordConfirmation }
-    setState({
-      ...state,
-      nameError: validation.validate('name', formData),
-      emailError: validation.validate('email', formData),
-      passwordError: validation.validate('password', formData),
-      passwordConfirmationError: validation.validate('passwordConfirmation', formData)
-    })
-  }, [state.name, state.email, state.password, state.passwordConfirmation])
+    setState(currentState => ({
+      ...currentState,
+      emailError: validation.validate('email', state)
+    }))
+  }, [state.email])
+
+  useEffect(() => {
+    setState(currentState => ({
+      ...currentState,
+      nameError: validation.validate('name', state)
+    }))
+  }, [state.name])
+
+  useEffect(() => {
+    setState(currentState => ({
+      ...currentState,
+      passwordError: validation.validate('password', state)
+    }))
+  }, [state.password])
+
+  useEffect(() => {
+    setState(currentState => ({
+      ...currentState,
+      passwordConfirmationError: validation.validate('passwordConfirmation', state)
+    }))
+  }, [state.passwordConfirmation])
 
   const isInvalidState = (): boolean => {
     return !!state.nameError || !!state.emailError || !!state.passwordError || !!state.passwordConfirmationError
