@@ -3,6 +3,7 @@ import FlipMove from 'react-flip-move'
 import Styles from './SurveyResult.scss'
 import Header from '@/presentation/components/header/Header'
 import Loading from '@/presentation/components/loading/Loading'
+import Calendar from '@/presentation/components/calendar/Calendar'
 
 type SurveyResultProps = {
 
@@ -13,7 +14,10 @@ const SurveyResult: React.FC<SurveyResultProps> = () => {
     <div className={Styles.surveyResultWrap}>
       <Header />
       <div className={Styles.contentWrap}>
-        <h2>Pergunta</h2>
+        <hgroup>
+          <Calendar date={new Date()} className={Styles.calendarWrap} />
+          <h2>Pergunta</h2>
+        </hgroup>
         <FlipMove className={Styles.answers}>
           <li>
             <img src="" alt=""/>
