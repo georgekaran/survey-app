@@ -2,7 +2,7 @@ import * as React from 'react'
 import FlipMove from 'react-flip-move'
 import Styles from './SurveyResult.scss'
 import Header from '@/presentation/components/header/Header'
-import Spinner from '@/presentation/components/spinner/Spinner'
+import Loading from '@/presentation/components/loading/Loading'
 
 type SurveyResultProps = {
 
@@ -27,12 +27,7 @@ const SurveyResult: React.FC<SurveyResultProps> = () => {
           </li>
         </FlipMove>
         <button>Voltar</button>
-        <div className={Styles.loadingWrap}>
-          <div className={Styles.loading}>
-            <span>Loading...</span>
-            <Spinner />
-          </div>
-        </div>
+        {false && <Loading />}
       </div>
     </div>
   )
