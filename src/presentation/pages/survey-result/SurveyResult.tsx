@@ -1,20 +1,30 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import FlipMove from 'react-flip-move'
+
 import Styles from './SurveyResult.scss'
 import Header from '@/presentation/components/header/Header'
 import Loading from '@/presentation/components/loading/Loading'
 import Calendar from '@/presentation/components/calendar/Calendar'
+import { LoadSurveyResult } from '@/domain/usecases'
+import Footer from '@/presentation/components/footer/Footer'
+import Error from '@/presentation/components/error/Error'
 
 type SurveyResultProps = {
 
 }
 
 const SurveyResult: React.FC<SurveyResultProps> = () => {
+  const [state] = useState({
+    isLoading: false,
+    error: '',
+    surveyResult: null as LoadSurveyResult.Model
+  })
+
   return (
     <div className={Styles.surveyResultWrap}>
       <Header />
-      <div className={Styles.contentWrap}>
-        {true &&
+      <div data-testid="survey-result" className={Styles.contentWrap}>
+        {state.surveyResult &&
           <>
             <hgroup>
               <Calendar date={new Date()} className={Styles.calendarWrap} />
@@ -35,8 +45,10 @@ const SurveyResult: React.FC<SurveyResultProps> = () => {
             <button>Voltar</button>
           </>
         }
-        {false && <Loading />}
+        {state.isLoading && <Loading />}
+        {state.error && <Error error={state.error} reload={() => undefined} />}
       </div>
+      <Footer />
     </div>
   )
 }
