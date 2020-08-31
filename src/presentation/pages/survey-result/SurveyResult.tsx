@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FlipMove from 'react-flip-move'
 
 import Styles from './SurveyResult.scss'
@@ -10,15 +10,19 @@ import Footer from '@/presentation/components/footer/Footer'
 import Error from '@/presentation/components/error/Error'
 
 type SurveyResultProps = {
-
+  loadSurveyResult: LoadSurveyResult
 }
 
-const SurveyResult: React.FC<SurveyResultProps> = () => {
+const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyResultProps) => {
   const [state] = useState({
     isLoading: false,
     error: '',
     surveyResult: null as LoadSurveyResult.Model
   })
+
+  useEffect(() => {
+    loadSurveyResult.load()
+  }, [])
 
   return (
     <div className={Styles.surveyResultWrap}>
