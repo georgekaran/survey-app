@@ -14,23 +14,27 @@ const SurveyResult: React.FC<SurveyResultProps> = () => {
     <div className={Styles.surveyResultWrap}>
       <Header />
       <div className={Styles.contentWrap}>
-        <hgroup>
-          <Calendar date={new Date()} className={Styles.calendarWrap} />
-          <h2>Pergunta</h2>
-        </hgroup>
-        <FlipMove className={Styles.answers}>
-          <li>
-            <img src="" alt=""/>
-            <span className={Styles.answer}>Resposta 1</span>
-            <span className={Styles.percent}>50%</span>
-          </li>
-          <li className={Styles.active}>
-            <img src="" alt=""/>
-            <span className={Styles.answer}>Resposta 1</span>
-            <span className={Styles.percent}>50%</span>
-          </li>
-        </FlipMove>
-        <button>Voltar</button>
+        {true &&
+          <>
+            <hgroup>
+              <Calendar date={new Date()} className={Styles.calendarWrap} />
+              <h2>Pergunta</h2>
+            </hgroup>
+            <FlipMove className={Styles.answers}>
+              <li>
+                <img src="" alt=""/>
+                <span className={Styles.answer}>Resposta 1</span>
+                <span className={Styles.percent}>50%</span>
+              </li>
+              <li className={Styles.active}>
+                <img src="" alt=""/>
+                <span className={Styles.answer}>Resposta 1</span>
+                <span className={Styles.percent}>50%</span>
+              </li>
+            </FlipMove>
+            <button>Voltar</button>
+          </>
+        }
         {false && <Loading />}
       </div>
     </div>
