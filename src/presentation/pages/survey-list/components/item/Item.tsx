@@ -3,6 +3,7 @@ import Styles from './Item.scss'
 import Icon, { IconName } from '@/presentation/components/icon/Icon'
 import { SurveyModel } from '@/domain/models'
 import Calendar from '@/presentation/components/calendar/Calendar'
+import { Link } from 'react-router-dom'
 
 type Props = {
   survey: SurveyModel
@@ -19,7 +20,11 @@ const SurveyItem: React.FC<Props> = ({ survey }: Props) => {
           {survey.question}
         </p>
       </div>
-      <footer>See result</footer>
+      <footer>
+        <Link data-testid="link" to={`/surveys/${survey.id}`}>
+          See result
+        </Link>
+      </footer>
     </li>
   )
 }
