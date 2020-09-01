@@ -14,14 +14,21 @@ type SurveyResultProps = {
 }
 
 const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyResultProps) => {
-  const [state] = useState({
+  const [state, setState] = useState({
     isLoading: false,
     error: '',
     surveyResult: null as LoadSurveyResult.Model
   })
 
   useEffect(() => {
-    loadSurveyResult.load()
+    (async () => {
+      try {
+        const surveyResult = await loadSurveyResult.load()
+        setState(old => ({ ...old, surveyResult }))
+      } catch (error) {
+
+      }
+    })()
   }, [])
 
   return (
@@ -31,20 +38,17 @@ const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyR
         {state.surveyResult &&
           <>
             <hgroup>
-              <Calendar date={new Date()} className={Styles.calendarWrap} />
-              <h2>Pergunta</h2>
+              <Calendar date={state.surveyResult.date} className={Styles.calendarWrap} />
+              <h2 data-testid="question">{state.surveyResult.question}</h2>
             </hgroup>
-            <FlipMove className={Styles.answers}>
-              <li>
-                <img src="" alt=""/>
-                <span className={Styles.answer}>Resposta 1</span>
-                <span className={Styles.percent}>50%</span>
-              </li>
-              <li className={Styles.active}>
-                <img src="" alt=""/>
-                <span className={Styles.answer}>Resposta 1</span>
-                <span className={Styles.percent}>50%</span>
-              </li>
+            <FlipMove data-testid="answers" className={Styles.answers}>
+              {state.surveyResult.answers.map((answer) => (
+                <li data-testid="answer-wrap" className={answer.isCurrentAccountAnswer ? Styles.active : ''} key={answer.answer}>
+                  {answer.image && <img data-testid="image" src={answer.image} alt={answer.answer}/>}
+                  <span data-testid="answer" className={Styles.answer}>{answer.answer}</span>
+                  <span data-testid="percent" className={Styles.percent}>{answer.percent}%</span>
+                </li>
+              ))}
             </FlipMove>
             <button>Voltar</button>
           </>
