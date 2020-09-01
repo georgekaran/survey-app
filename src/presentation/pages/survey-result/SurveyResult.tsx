@@ -8,12 +8,16 @@ import Calendar from '@/presentation/components/calendar/Calendar'
 import { LoadSurveyResult } from '@/domain/usecases'
 import Footer from '@/presentation/components/footer/Footer'
 import Error from '@/presentation/components/error/Error'
+import { useErrorHandler } from '@/presentation/hooks'
 
 type SurveyResultProps = {
   loadSurveyResult: LoadSurveyResult
 }
 
 const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyResultProps) => {
+  const handleError = useErrorHandler((error: Error) => {
+    setState(old => ({ ...old, surveyResult: null, error: error.message }))
+  })
   const [state, setState] = useState({
     isLoading: false,
     error: '',
@@ -21,14 +25,9 @@ const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyR
   })
 
   useEffect(() => {
-    (async () => {
-      try {
-        const surveyResult = await loadSurveyResult.load()
-        setState(old => ({ ...old, surveyResult }))
-      } catch (error) {
-
-      }
-    })()
+    loadSurveyResult.load()
+      .then(surveyResult => setState(old => ({ ...old, surveyResult })))
+      .catch(handleError)
   }, [])
 
   return (
