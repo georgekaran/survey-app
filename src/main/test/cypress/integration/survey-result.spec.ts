@@ -3,10 +3,6 @@ import * as Helpers from '../utils/helpers'
 
 const path = /surveys\/+/
 
-const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
-
-const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
-
 const mockOk = (): void => Http.mockOk(path, 'GET', 'fx:survey-result')
 
 describe('SurveyResult', () => {
@@ -15,51 +11,74 @@ describe('SurveyResult', () => {
     cy.server()
   })
 
-  it('Should present error on UnexpectedError', () => {
-    mockUnexpectedError()
-    cy.visit('/surveys/any_id')
-    cy.getByTestId('error').should('contain.text', 'Something went wrong. Try again later.')
-  })
+  describe('LoadSurveyResult', () => {
+    const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
 
-  it('Should reload on button reload click', () => {
-    mockUnexpectedError()
-    cy.visit('/surveys/any_id')
-    cy.getByTestId('error').should('contain.text', 'Something went wrong. Try again later.')
-    mockOk()
-    cy.getByTestId('reload-btn').click()
-    cy.getByTestId('question').should('exist')
-  })
+    const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
 
-  it('Should logout on AccessDeniedError', () => {
-    mockAccessDeniedError()
-    cy.visit('/surveys/any_id')
-    Helpers.testUrl('/login')
-  })
-
-  it('Should present survey result', () => {
-    mockOk()
-    cy.visit('/surveys/any_id')
-    cy.getByTestId('question').should('have.text', 'Question 1')
-    cy.getByTestId('day').should('have.text', '29')
-    cy.getByTestId('month').should('have.text', 'jul')
-    cy.getByTestId('year').should('have.text', '2020')
-    cy.get('li:nth-child(1)').then(li => {
-      assert.equal(li.find('[data-testid="answer"]').text(), 'any_answer')
-      assert.equal(li.find('[data-testid="percent"]').text(), '80%')
-      assert.equal(li.find('[data-testid="image"]').attr('src'), 'any_image')
+    it('Should present error on UnexpectedError', () => {
+      mockUnexpectedError()
+      cy.visit('/surveys/any_id')
+      cy.getByTestId('error').should('contain.text', 'Something went wrong. Try again later.')
     })
-    cy.get('li:nth-child(2)').then(li => {
-      assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer')
-      assert.equal(li.find('[data-testid="percent"]').text(), '40%')
-      assert.notExists(li.find('[data-testid="image"]'))
+
+    it('Should reload on button reload click', () => {
+      mockUnexpectedError()
+      cy.visit('/surveys/any_id')
+      cy.getByTestId('error').should('contain.text', 'Something went wrong. Try again later.')
+      mockOk()
+      cy.getByTestId('reload-btn').click()
+      cy.getByTestId('question').should('exist')
+    })
+
+    it('Should logout on AccessDeniedError', () => {
+      mockAccessDeniedError()
+      cy.visit('/surveys/any_id')
+      Helpers.testUrl('/login')
+    })
+
+    it('Should present survey result', () => {
+      mockOk()
+      cy.visit('/surveys/any_id')
+      cy.getByTestId('question').should('have.text', 'Question 1')
+      cy.getByTestId('day').should('have.text', '29')
+      cy.getByTestId('month').should('have.text', 'jul')
+      cy.getByTestId('year').should('have.text', '2020')
+      cy.get('li:nth-child(1)').then(li => {
+        assert.equal(li.find('[data-testid="answer"]').text(), 'any_answer')
+        assert.equal(li.find('[data-testid="percent"]').text(), '80%')
+        assert.equal(li.find('[data-testid="image"]').attr('src'), 'any_image')
+      })
+      cy.get('li:nth-child(2)').then(li => {
+        assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer')
+        assert.equal(li.find('[data-testid="percent"]').text(), '40%')
+        assert.notExists(li.find('[data-testid="image"]'))
+      })
+    })
+
+    it('Should go back to SurveyList on back click', () => {
+      cy.visit('')
+      mockOk()
+      cy.visit('/surveys/any_id')
+      cy.getByTestId('back-btn').click()
+      Helpers.testUrl('/')
     })
   })
 
-  it('Should go back to SurveyList on back click', () => {
-    cy.visit('')
-    mockOk()
-    cy.visit('/surveys/any_id')
-    cy.getByTestId('back-btn').click()
-    Helpers.testUrl('/')
+  describe('SaveSurveyResult', () => {
+    const mockUnexpectedError = (): void => Http.mockServerError(path, 'PUT')
+
+    beforeEach(() => {
+      cy.fixture('account').then(account => Helpers.setLocalStorageItem('account', account))
+      cy.server()
+      mockOk()
+      cy.visit('/surveys/any_id')
+    })
+
+    it('Should present error on UnexpectedError', () => {
+      mockUnexpectedError()
+      cy.get('li:nth-child(2)').click()
+      cy.getByTestId('error').should('contain.text', 'Something went wrong. Try again later.')
+    })
   })
 })
