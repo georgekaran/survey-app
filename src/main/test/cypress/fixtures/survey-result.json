@@ -1,0 +1,17 @@
+{
+  "surveyId": "1",
+  "question": "Question 1", 
+  "date": "2020-07-29T00:00:00",
+  "answers": [{
+    "image": "any_image",
+    "answer": "any_answer",
+    "count": 20,
+    "percent": 80,
+    "isCurrentAccountAnswer": true
+  }, {
+    "answer": "other_answer",
+    "count": 5,
+    "percent": 40,
+    "isCurrentAccountAnswer": false
+  }]
+}
