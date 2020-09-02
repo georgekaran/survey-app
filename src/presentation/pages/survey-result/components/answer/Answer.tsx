@@ -8,7 +8,7 @@ export interface Props {
   answer: SurveyResultAnswer
 }
 
-const Answer: React.SFC<Props> = ({ answer }: Props) => {
+const Answer: React.FC<Props> = ({ answer }: Props) => {
   const { onAnswer } = useContext(SurveyResultContext)
   const activeClassName = answer.isCurrentAccountAnswer ? Styles.active : ''
 
@@ -18,15 +18,13 @@ const Answer: React.SFC<Props> = ({ answer }: Props) => {
     }
     onAnswer(answer.answer)
   }
-
   return (
     <li
-      key={answer.answer}
       data-testid="answer-wrap"
       className={[activeClassName, Styles.answerWrap].join(' ')}
       onClick={handleClick}
     >
-      {answer.image && <img data-testid="image" src={answer.image} alt={answer.answer}/>}
+      {answer.image && <img data-testid="image" src={answer.image} alt={answer.answer} />}
       <span data-testid="answer" className={Styles.answer}>{answer.answer}</span>
       <span data-testid="percent" className={Styles.percent}>{answer.percent}%</span>
     </li>
