@@ -1,20 +1,11 @@
+import { SurveyResultModel, SurveyResultAnswer } from '@/domain/models'
+
 export interface LoadSurveyResult {
   load: () => Promise<LoadSurveyResult.Model>
 }
 
 export namespace LoadSurveyResult {
-  export type Model = {
-    surveyId: string
-    question: string
-    answers: Answer[]
-    date: Date
-  }
+  export type Model = SurveyResultModel
 
-  export type Answer = {
-    image?: string
-    answer: string
-    count: number
-    percent: number
-    isCurrentAccountAnswer: boolean
-  }
+  export type Answer = SurveyResultAnswer
 }

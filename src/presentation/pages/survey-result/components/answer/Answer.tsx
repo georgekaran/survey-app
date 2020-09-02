@@ -1,10 +1,10 @@
 import React from 'react'
 import Styles from './Answer.scss'
 
-import { LoadSurveyResult } from '@/domain/usecases'
+import { SurveyResultAnswer } from '@/domain/models'
 
 export interface Props {
-  answer: LoadSurveyResult.Answer
+  answer: SurveyResultAnswer
 }
 
 const Answer: React.SFC<Props> = ({ answer }: Props) => {
