@@ -5,15 +5,16 @@ import { RemoteSurveyResultModel } from '@/data/models/remote-survey-result-mode
 export class RemoteSaveSurveyResult {
   constructor (
     private readonly url: string,
-    private readonly httpClient: HttpClient<RemoteSaveSurveyResult.Model>
+    private readonly httpClient: HttpClient<SaveSurveyResult.Model>
   ) {}
 
   async save (params: SaveSurveyResult.Params): Promise<SaveSurveyResult.Model> {
-    this.httpClient.request({
+    const httpResponse = await this.httpClient.request({
       method: 'put',
-      url: this.url
+      url: this.url,
+      body: params
     })
-    return null
+    return httpResponse.body
   }
 }
 
