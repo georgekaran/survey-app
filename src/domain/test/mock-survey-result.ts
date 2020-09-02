@@ -1,5 +1,10 @@
 import faker from 'faker'
 import { LoadSurveyResult } from '@/domain/usecases'
+import { SaveSurveyResult } from '../usecases/save-survey-result'
+
+export const mockSaveSurveyResultParams = (): SaveSurveyResult.Params => ({
+  answer: faker.random.word()
+})
 
 export const mockSurveyResultModel = (): LoadSurveyResult.Model => ({
   surveyId: faker.random.uuid(),
