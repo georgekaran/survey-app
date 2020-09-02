@@ -1,6 +1,7 @@
 import { SaveSurveyResult } from '@/domain/usecases/save-survey-result'
-import { HttpClient } from '@/data/protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { RemoteSurveyResultModel } from '@/data/models/remote-survey-result-model'
+import { AccessDeniedError } from '@/domain/errors'
 
 export class RemoteSaveSurveyResult {
   constructor (
@@ -14,7 +15,10 @@ export class RemoteSaveSurveyResult {
       url: this.url,
       body: params
     })
-    return httpResponse.body
+    switch (httpResponse.statusCode) {
+      case HttpStatusCode.ok: return httpResponse.body
+      case HttpStatusCode.forbidden: throw new AccessDeniedError()
+    }
   }
 }
 
