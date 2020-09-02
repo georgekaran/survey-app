@@ -8,12 +8,15 @@ import Footer from '@/presentation/components/footer/Footer'
 import Error from '@/presentation/components/error/Error'
 import { useErrorHandler } from '@/presentation/hooks'
 import Result from './components/result/Result'
+import SurveyResultContext from '@/presentation/pages/survey-result/components/context/context'
+import { SaveSurveyResult } from '@/domain/usecases/save-survey-result'
 
 type SurveyResultProps = {
   loadSurveyResult: LoadSurveyResult
+  saveSurveyResult: SaveSurveyResult
 }
 
-const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyResultProps) => {
+const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult, saveSurveyResult }: SurveyResultProps) => {
   const handleError = useErrorHandler((error: Error) => {
     setState(old => ({ ...old, surveyResult: null, error: error.message }))
   })
@@ -39,18 +42,27 @@ const SurveyResult: React.FC<SurveyResultProps> = ({ loadSurveyResult }: SurveyR
     }))
   }
 
+  const onAnswer = (answer: string): void => {
+    setState(old => ({ ...old, isLoading: true }))
+    saveSurveyResult.save({ answer })
+      .then()
+      .catch()
+  }
+
   return (
-    <div className={Styles.surveyResultWrap}>
-      <Header />
-      <div data-testid="survey-result" className={Styles.contentWrap}>
-        {state.surveyResult &&
-          <Result surveyResult={state.surveyResult} />
-        }
-        {state.isLoading && <Loading />}
-        {state.error && <Error error={state.error} reload={reload} />}
+    <SurveyResultContext.Provider value={{ onAnswer }}>
+      <div className={Styles.surveyResultWrap}>
+        <Header />
+        <div data-testid="survey-result" className={Styles.contentWrap}>
+          {state.surveyResult &&
+            <Result surveyResult={state.surveyResult} />
+          }
+          {state.isLoading && <Loading />}
+          {state.error && <Error error={state.error} reload={reload} />}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </SurveyResultContext.Provider>
   )
 }
 
