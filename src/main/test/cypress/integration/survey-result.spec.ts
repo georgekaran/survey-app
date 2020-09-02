@@ -1,7 +1,7 @@
 import * as Http from '../utils/http-mocks'
 import * as Helpers from '../utils/helpers'
 
-const path = /surveys/
+const path = /surveys\/+/
 
 const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
 
@@ -53,5 +53,13 @@ describe('SurveyResult', () => {
       assert.equal(li.find('[data-testid="percent"]').text(), '40%')
       assert.notExists(li.find('[data-testid="image"]'))
     })
+  })
+
+  it('Should go back to SurveyList on back click', () => {
+    cy.visit('')
+    mockOk()
+    cy.visit('/surveys/any_id')
+    cy.getByTestId('back-btn').click()
+    Helpers.testUrl('/')
   })
 })
