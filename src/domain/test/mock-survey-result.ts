@@ -9,19 +9,19 @@ export const mockSaveSurveyResultParams = (): SaveSurveyResult.Params => ({
 export const mockSurveyResultModel = (): LoadSurveyResult.Model => ({
   surveyId: faker.random.uuid(),
   question: faker.random.words(10),
+  date: faker.date.recent(),
   answers: [{
-    count: faker.random.number(),
-    percent: faker.random.number(100),
     image: faker.internet.url(),
     answer: faker.random.word(),
-    isCurrentAccountAnswer: true
-  }, {
     count: faker.random.number(),
     percent: faker.random.number(100),
+    isCurrentAccountAnswer: true
+  }, {
     answer: faker.random.word(),
+    count: faker.random.number(),
+    percent: faker.random.number(100),
     isCurrentAccountAnswer: false
-  }],
-  date: faker.date.recent()
+  }]
 })
 
 export class LoadSurveyResultSpy implements LoadSurveyResult {
@@ -36,7 +36,7 @@ export class LoadSurveyResultSpy implements LoadSurveyResult {
 
 export class SaveSurveyResultSpy implements SaveSurveyResult {
   data: SaveSurveyResult.Params
-  surveyResult: SaveSurveyResult.Model = mockSurveyResultModel()
+  surveyResult = mockSurveyResultModel()
 
   async save (data: SaveSurveyResult.Params): Promise<SaveSurveyResult.Model> {
     this.data = data
