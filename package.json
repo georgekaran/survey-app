@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@cypress/webpack-preprocessor": "^5.4.8",
+    "@cypress/webpack-preprocessor": "^5.4.10",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/axios": "^0.14.0",
