@@ -50,7 +50,7 @@
     "full-icu": "^1.3.1",
     "git-commit-msg-linter": "^3.0.0",
     "html-webpack-plugin": "^4.5.1",
-    "husky": "^4.3.8",
+    "husky": "^5.1.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "jest-localstorage-mock": "^2.4.6",
